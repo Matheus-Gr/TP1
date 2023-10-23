@@ -3,6 +3,7 @@
 #include "Estatistica.h"
 #include "Registro.h"
 #include <string.h>
+#include "ArvoreBinaria.h"
 
 int main(int argc, char *argv[]) {
     int metodo, quantidade, ordem, chave, mostrar_pesquisa = 0;
@@ -26,18 +27,37 @@ int main(int argc, char *argv[]) {
     Estatistica* est = malloc(sizeof(Estatistica));
 
     //Criação do arquivo que sera lido
-    criarArquivoBinario(quantidade, "../dados.bin", ordem);
+    criarArquivoBinario(quantidade, "dados.bin", ordem);
     if(mostrar_pesquisa){
-        lerArquivoBinario("../dados.bin");
+        lerArquivoBinario("dados.bin");
     }
 
+    //abrindo arquivo a ser manipulado
+    FILE* arquivo = fopen("dados.bin", "rb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir arquivo!\n");
+        exit(1);
+    }
 
     switch (metodo) {
         case 1:
             //Acesso sequencial indexado
             break;
         case 2:
-            //Arvore binaria
+            criarArvoreBinaria(arquivo,quantidade);
+            FILE * arvore_binaria = fopen("arvorebin.bin", "rb");
+            if (arvore_binaria == NULL) {
+                printf("Erro ao abrir arvore binaria!\n");
+                exit(1);
+            }
+
+            zerarEstatistica(est);
+            *reg = buscaArvoreBinaria(arvore_binaria, chave,est);
+            finalizarEstatistica(est);
+            printf("Registro %d\n"
+                   "    Dado 1:%ld\n"
+                   "    Dado 2:%s\n",
+                   reg->chave, reg->dado1, reg->dado2);
             break;
         case 3:
             //Arvore B
@@ -50,12 +70,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-//    printf("Estatisticas\n"
-//           "    Numero de transferencias: %d\n"
-//           "    Numero de comparacoes: %d\n"
-//           "    Tempo: %fs\n",
-//           est->transferencias, est->comparacoes,
-//           calcularTempo(est));
+   printf("Estatisticas\n"
+          "    Numero de transferencias: %d\n"
+          "    Numero de comparacoes: %d\n"
+          "    Tempo: %fs\n",
+          est->transferencias, est->comparacoes,
+          calcularTempo(est));
 
     return 0;
 }
