@@ -4,6 +4,7 @@
 #include "Registro.h"
 #include <string.h>
 #include "ArvoreBinaria.h"
+#include "ArvoreB.h"
 
 int main(int argc, char *argv[]) {
     int metodo, quantidade, ordem, chave, mostrar_pesquisa = 0;
@@ -60,7 +61,9 @@ int main(int argc, char *argv[]) {
                    reg->chave, reg->dado1, reg->dado2);
             break;
         case 3:
-            //Arvore B
+            zerarEstatistica(est);
+            arvoreB(arquivo, chave, est);
+            finalizarEstatistica(est);
             break;
         case 4:
             //Arvore B*
