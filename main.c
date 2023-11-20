@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "AcessoSequencial.h"
 #include "Estatistica.h"
 #include "Registro.h"
-#include <string.h>
 #include "ArvoreBinaria.h"
 #include "ArvoreB.h"
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
     switch (metodo) {
         case 1:
             //Acesso sequencial indexado
+            acessoSequencialIndexado(arquivo,quantidade,reg);
             break;
         case 2:
             criarArvoreBinaria(arquivo,quantidade);
