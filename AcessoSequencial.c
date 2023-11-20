@@ -8,19 +8,6 @@
 
 Estatistica est;
 
-int * criaIndices(FILE* arquivo,int maxTam, int transferencias){
-    rewind(arquivo);
-    int *indices = (int*)malloc(sizeof(int)*maxTam);
-    Registro* registros;
-
-    for(int i = 0; i < maxTam; i++){
-        transferencias++;
-        registros = leRegistro(arquivo,TAMPAG);
-        indices[i] = registros[0].chave;
-    }
-    return indices;
-}
-
 void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, int tamanhoArquivo) {
   Registro pagina[TAMPAG];
   int i, quantidadeItems;
