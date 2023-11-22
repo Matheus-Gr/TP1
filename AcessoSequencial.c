@@ -6,22 +6,22 @@
 #include <string.h>
 
 
-Estatistica est;
 
-void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, int tamanhoArquivo) {
+
+void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, int tamanhoArquivo,Estatistica* est) {
   Registro pagina[TAMPAG];
   int i, quantidadeItems;
   long desloc;
   
- calcularTempo(&est);
+ calcularTempo(est);
   i = 0;
 
   //Procura a página do item desejado
   while (i < tam && tabela[i] <= registroPesquisa->chave) {
     i++;
-    est.comparacoes++;
+    incComp(est);
   }
-  est.comparacoes++;
+  incComp(est);
 
   if(i == 0) return ;
 
@@ -36,11 +36,11 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
   desloc = (i - 1) * TAMPAG * sizeof(Registro);
   fseek(arquivo, desloc, SEEK_SET);
   fread(&pagina, sizeof(Registro), quantidadeItems, arquivo);
-  est.transferencias++;
+  incTransf(est);
 
   //Varredura na página para encontrar o item
   for(i = 0; i < quantidadeItems; i++) {
-    est.comparacoes++;
+    incComp(est);
     if(pagina[i].chave == registroPesquisa->chave) {
       *registroPesquisa = pagina[i];   
       break;
@@ -50,9 +50,9 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
   return ;
 }
 
-void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *registroPesquisa) {
-  zerarEstatistica(&est);
-  incTransf(&est);
+void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *registroPesquisa,Estatistica* est) {
+  //zerarEstatistica(&est);
+  incTransf(est);
   int tamanhoTabela = tamanhoArquivo / TAMPAG;
   if(tamanhoTabela < ((double) tamanhoArquivo / (double) TAMPAG)) {
     tamanhoTabela++;
@@ -66,7 +66,7 @@ void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *regis
   //Leitura e armazenamento do menor item da página
   while (posicao < tamanhoTabela) {
     fread(&registro, sizeof(registro), 1, arquivo);
-    incTransf(&est);
+    incTransf(est);
 
     fseek(arquivo, (sizeof(registro) * (TAMPAG - 1)), SEEK_CUR);
 
@@ -76,12 +76,11 @@ void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *regis
   }
   fflush(stdout);
 
-  finalizarEstatistica(&est);
+  //finalizarEstatistica(&est);
   
 
-  calcularTempo(&est);
-  pesquisa(arquivo, tabela, tamanhoTabela, registroPesquisa, tamanhoArquivo);
-  finalizarEstatistica(&est);
+  calcularTempo(est);
+  pesquisa(arquivo, tabela, tamanhoTabela, registroPesquisa, tamanhoArquivo, est);
   
   free(tabela);
   return ;

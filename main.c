@@ -44,7 +44,9 @@ int main(int argc, char *argv[]) {
     switch (metodo) {
         case 1:
             //Acesso sequencial indexado
-            acessoSequencialIndexado(arquivo,quantidade,reg);
+            zerarEstatistica(est);
+            acessoSequencialIndexado(arquivo,quantidade,reg,est);
+            finalizarEstatistica(est);
             break;
         case 2:
             criarArvoreBinaria(arquivo,quantidade);
