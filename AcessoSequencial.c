@@ -76,10 +76,6 @@ void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *regis
   }
   fflush(stdout);
 
-  //finalizarEstatistica(&est);
-  
-
-  calcularTempo(est);
   pesquisa(arquivo, tabela, tamanhoTabela, registroPesquisa, tamanhoArquivo, est);
   
   free(tabela);
