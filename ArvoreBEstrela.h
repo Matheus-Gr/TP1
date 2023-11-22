@@ -28,7 +28,7 @@ typedef struct TipoPaginaBE {
         struct {
             int ni;
             TipoRegistroBE ri[MM2Est];
-            TipoApontadorBE pi[MM2Est + 1];
+            TipoApontadorBE pi[MM2Est + 1]; 
         }U0;
         struct {
             int ne;
@@ -38,7 +38,7 @@ typedef struct TipoPaginaBE {
     }UU;
 } TipoPaginaBE;
 
-int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est);
+int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est,int *Condicao);
 void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *analise);
 void InicializaBE(TipoApontadorBE *arvore);
 void bstar_Insere(TipoRegistroBE reg, TipoApontadorBE *Ap, Estatistica *est);

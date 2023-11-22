@@ -36,7 +36,7 @@ void criarArquivoBinario(int quantidade, char* caminho, int ordem) {
             registro.chave = i;
             registro.dado1 = i * 100;
             sprintf(registro.dado2, "Dado 2 do registro %d", i);
-            printf("\nchave -> %d\n",registro.chave);
+            
             fwrite(&registro, sizeof(Registro), 1, arquivo);
         }
     } else if (ordem == 3) {

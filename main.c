@@ -82,12 +82,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-   printf("Estatisticas\n"
+   /*printf("Estatisticas\n"
           "    Numero de transferencias: %d\n"
           "    Numero de comparacoes: %d\n"
           "    Tempo: %fs\n",
           est->transferencias, est->comparacoes,
           calcularTempo(est));
+    */
 
     return 0;
 }

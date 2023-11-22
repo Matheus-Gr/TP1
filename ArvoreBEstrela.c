@@ -5,7 +5,7 @@
 #include "ArvoreBEstrela.h"
 #include "Estatistica.h"
 
-int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est)
+int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est, int *Condicao)
 {
     int i = 1;
     TipoApontadorBE PageAtual;
@@ -22,14 +22,14 @@ int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est)
         if (x->chave <= PageAtual->UU.U0.ri[i - 1].chave)
         {
             incComp(est);
-            pesquisaBEstrela(x, &PageAtual->UU.U0.pi[i - 1], est);
+            pesquisaBEstrela(x, &PageAtual->UU.U0.pi[i - 1], est, Condicao);
         }
         else
         {
             incComp(est);
-            pesquisaBEstrela(x, &PageAtual->UU.U0.pi[i], est);
+            pesquisaBEstrela(x, &PageAtual->UU.U0.pi[i], est, Condicao);
         }
-        return  x->dado1 ? 1 : 0 ;
+         return  Condicao ? 1 : 0 ;
     }
 
 
@@ -47,6 +47,7 @@ int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est)
         {
             (*x) = PageAtual->UU.U1.re[i - 1];
             incComp(est);
+            (*Condicao) = 1;
             return 1;
         }
         else
@@ -54,6 +55,7 @@ int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est)
 
             incComp(est);
             // printf("Não achou nada\n");
+            (*Condicao) = 0;
             return 0;
         }
       
@@ -64,7 +66,8 @@ void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est){
     TipoRegistroBE reg;
     TipoRegistroBE item;
     item.chave = chave;
-    Estatistica a;
+    //Estatistica a;
+    int Condicao = 0;
     
 
 
@@ -74,19 +77,40 @@ void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est){
     for (int i = 0; i < qtd_limite; i++)
     {
         fread(&reg, sizeof(TipoRegistroBE), 1, arq);
-        InsereNaPagina(&arvore, reg, &a);
-        incComp(est);
+        InsereNaPagina(&arvore, reg, est);
+        //incComp(est);
         incTransf(est);
         
     }
-
+    
+  
     finalizarEstatistica(est);
-   
-    if(pesquisaBEstrela(&item, &arvore, est)){
+
+      printf("Estatisticas de criação \n"
+          "    Numero de transferencias: %d\n"
+          "    Numero de comparacoes: %d\n"
+          "    Tempo: %fs\n",
+          est->transferencias, est->comparacoes,
+          calcularTempo(est));
+
+    
+    zerarEstatistica(est);
+    if(pesquisaBEstrela(&item, &arvore, est, &Condicao)){
         printf("\nEncontrado o item de chave %d\nregistro_1: %ld\nregistro_2: %s\n", item.chave, item.dado1,item.dado2);
     }else{
         printf("\nNao encontrado o item de chave %d\n", item.chave);
     }
+
+    finalizarEstatistica(est);
+
+
+    printf("\nEstatisticas de Pesquisa \n"
+          "    Numero de transferencias: %d\n"
+          "    Numero de comparacoes: %d\n"
+          "    Tempo: %fs\n",
+          est->transferencias, est->comparacoes,
+          calcularTempo(est));
+
 
 }
 
@@ -95,7 +119,7 @@ void InicializaBE(TipoApontadorBE *arvore){
 }
 
 
-void insereInterna(TipoApontadorBE Ap, TipoChaveBS Chave, TipoApontadorBE ApDir, Estatistica *a){
+void insereInterna(TipoApontadorBE Ap, TipoChaveBS Chave, TipoApontadorBE ApDir, Estatistica *est){
     int i;
     i = Ap->UU.U0.ni;
     int TemEspaco;
@@ -103,6 +127,7 @@ void insereInterna(TipoApontadorBE Ap, TipoChaveBS Chave, TipoApontadorBE ApDir,
 
     while(TemEspaco){
         if(Chave >= Ap->UU.U0.ri[i-1].chave){
+            incComp(est);
             TemEspaco = 0;
             break;
         }
@@ -128,6 +153,7 @@ void InserenaFolha(TipoRegistroBE reg, TipoApontadorBE Ap, Estatistica *est) {
 
     while(TemEspaco){
         if(reg.chave >= Ap->UU.U1.re[i - 1].chave){
+            incComp(est);
             TemEspaco = 0;
             break;
         }
