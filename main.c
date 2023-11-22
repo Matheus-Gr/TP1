@@ -6,6 +6,7 @@
 #include "Registro.h"
 #include "ArvoreBinaria.h"
 #include "ArvoreB.h"
+#include "ArvoreBEstrela.h"
 
 int main(int argc, char *argv[]) {
     int metodo, quantidade, ordem, chave, mostrar_pesquisa = 0;
@@ -71,6 +72,10 @@ int main(int argc, char *argv[]) {
             break;
         case 4:
             //Arvore B*
+
+            zerarEstatistica(est);
+            arvBE_main(chave, arquivo,  quantidade ,est);
+            finalizarEstatistica(est);
             break;
         default:
             printf("Metodo invalido. Use um numero de 1 a 4.\n");

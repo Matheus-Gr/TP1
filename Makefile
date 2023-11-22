@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -std=c99
 
-SRC = Estatistica.c main.c ArvoreBinaria.c Registro.c ArvoreB.c
+SRC = Estatistica.c main.c ArvoreBinaria.c Registro.c ArvoreB.c AcessoSequencial.c ArvoreBEstrela.c
 OBJ = $(SRC:.c=.o)
 
 tp1.exe: $(OBJ)
