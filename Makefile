@@ -1,14 +1,23 @@
+# Makefile para compilar o programa tp1.exe
+
+# Compilador
 CC = gcc
+
+# Opções de compilação
 CFLAGS = -Wall -std=c99
 
-SRC = Estatistica.c main.c ArvoreBinaria.c Registro.c ArvoreB.c AcessoSequencial.c ArvoreBEstrela.c
-OBJ = $(SRC:.c=.o)
+# Arquivos fonte
+SRCS = Estatistica.c main.c ArvoreBinaria.c Registro.c AcessoSequencial.c ArvoreB.c ArvoreBEstrela.c
 
-tp1.exe: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
+# Nome do executável
+TARGET = tp1.exe
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $<
+OBJS = $(SRCS:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
 
 clean:
-	rm -f tp1.exe $(OBJ)
+	del /Q $(OBJS) dados.bin
