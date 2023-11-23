@@ -49,5 +49,5 @@ void incComp(Estatistica* estatistica){
  * @return O tempo de execução em segundos.
  */
 double calcularTempo(Estatistica* estatistica) {
-    return (double)(estatistica->tempoFim - estatistica->tempoInicio) / CLOCKS_PER_SEC;
+    return ((double)(estatistica->tempoFim - estatistica->tempoInicio)  * 1000 )/ CLOCKS_PER_SEC;
 }

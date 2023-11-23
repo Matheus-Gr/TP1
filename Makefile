@@ -20,4 +20,4 @@ $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
 
 clean:
-	del /Q $(OBJS) dados.bin
+	del /Q $(OBJS) dados.bin $(TARGET)

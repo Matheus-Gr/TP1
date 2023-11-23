@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
    printf("Estatisticas\n"
           "    Numero de transferencias: %d\n"
           "    Numero de comparacoes: %d\n"
-          "    Tempo: %fs\n",
+          "    Tempo: %lfms\n",
           est->transferencias, est->comparacoes,
           calcularTempo(est));
 
