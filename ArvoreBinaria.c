@@ -18,6 +18,7 @@ void criarArvoreBinaria(FILE *arquivo, int quantidade) {
 
     int pos = 0;
     while (fread(&registro, sizeof(Registro),1,arquivo)) {
+        // printf("reg %d\n", registro.chave);
         NodeBinario node;
         node.esquerda = -1;
         node.direita = -1;
@@ -56,6 +57,7 @@ void criarArvoreBinaria(FILE *arquivo, int quantidade) {
 
     for(int i = 0; i < quantidade; i++) {
         fwrite(&nodes[i], sizeof(NodeBinario), 1, arvore_binaria);
+        // printf("node %d, E %d, D %d\n", nodes->registro.chave, nodes->esquerda, nodes->direita);
     }
 
     fclose(arvore_binaria);

@@ -11,8 +11,6 @@
 void criarArquivoBinario(int quantidade, char* caminho, int ordem) {
     Registro registro;
 
-    printf("Nome do arquivo: %s\n", caminho);
-
     FILE *arquivo = fopen(caminho, "wb");
     if (arquivo == NULL) {
         printf("Erro ao criar arquivo binario!\n");

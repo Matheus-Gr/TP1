@@ -61,7 +61,7 @@ int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est, i
       
 }
 
-void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est){
+void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est, double* tempocriacao){
     TipoApontadorBE arvore;
     TipoRegistroBE reg;
     TipoRegistroBE item;
@@ -78,40 +78,26 @@ void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est){
     {
         fread(&reg, sizeof(TipoRegistroBE), 1, arq);
         InsereNaPagina(&arvore, reg, est);
-        //incComp(est);
         incTransf(est);
         
     }
     
   
     finalizarEstatistica(est);
-
-      printf("Estatisticas de criação \n"
-          "    Numero de transferencias: %d\n"
-          "    Numero de comparacoes: %d\n"
-          "    Tempo: %fs\n",
-          est->transferencias, est->comparacoes,
-          calcularTempo(est));
-
+    *tempocriacao = calcularTempo(est);
     
     zerarEstatistica(est);
     if(pesquisaBEstrela(&item, &arvore, est, &Condicao)){
-        printf("\nEncontrado o item de chave %d\nregistro_1: %ld\nregistro_2: %s\n", item.chave, item.dado1,item.dado2);
+        printf("Registro %d\n"
+                    "    Dado 1:%ld\n"
+                    "    Dado 2:%s\n",
+                    item.chave, item.dado1, item.dado2);
+            
     }else{
         printf("\nNao encontrado o item de chave %d\n", item.chave);
     }
 
     finalizarEstatistica(est);
-
-
-    printf("\nEstatisticas de Pesquisa \n"
-          "    Numero de transferencias: %d\n"
-          "    Numero de comparacoes: %d\n"
-          "    Tempo: %fs\n",
-          est->transferencias, est->comparacoes,
-          calcularTempo(est));
-
-
 }
 
 void InicializaBE(TipoApontadorBE *arvore){

@@ -39,7 +39,7 @@ typedef struct TipoPaginaBE {
 } TipoPaginaBE;
 
 int pesquisaBEstrela(TipoRegistroBE *x, TipoApontadorBE *Ap, Estatistica *est,int *Condicao);
-void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *analise);
+void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *analise, double* tempocriacao);
 void InicializaBE(TipoApontadorBE *arvore);
 void bstar_Insere(TipoRegistroBE reg, TipoApontadorBE *Ap, Estatistica *est);
 void bstar_Ins(TipoRegistroBE reg, TipoApontadorBE Ap, short *Cresceu, TipoRegistroBE* RegRetorno, TipoApontadorBE *ApRetorno, Estatistica *est);
