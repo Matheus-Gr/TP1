@@ -13,7 +13,6 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
   int i, quantidadeItems;
   long desloc;
   
- calcularTempo(est);
   i = 0;
 
   //Procura a página do item desejado
@@ -21,16 +20,19 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
     i++;
     incComp(est);
   }
+
+  if(i == 0)return ;
   incComp(est);
-
-  if(i == 0) return ;
-
+  
   //Verifica a quantidade de itens na página
-  if(i < tam) quantidadeItems = TAMPAG;
+  if(i < tam){
+    quantidadeItems = TAMPAG;
+  } 
   else {
     quantidadeItems = tamanhoArquivo % TAMPAG;
     if(quantidadeItems == 0) quantidadeItems = TAMPAG;
   }
+  incComp(est);
 
   //Carregando a página para a memória principal
   desloc = (i - 1) * TAMPAG * sizeof(Registro);
@@ -43,6 +45,7 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
     incComp(est);
     if(pagina[i].chave == registroPesquisa->chave) {
       *registroPesquisa = pagina[i];   
+      incComp(est);
       break;
     }
   }
@@ -51,8 +54,6 @@ void pesquisa(FILE *arquivo, int *tabela, int tam, Registro *registroPesquisa, i
 }
 
 void acessoSequencialIndexado(FILE *arquivo, int tamanhoArquivo, Registro *registroPesquisa,Estatistica* est) {
-  //zerarEstatistica(&est);
-  incTransf(est);
   int tamanhoTabela = tamanhoArquivo / TAMPAG;
   if(tamanhoTabela < ((double) tamanhoArquivo / (double) TAMPAG)) {
     tamanhoTabela++;
