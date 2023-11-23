@@ -54,15 +54,22 @@ int main(int argc, char *argv[]) {
             zerarEstatistica(est);
             acessoSequencialIndexado(arquivo,quantidade,reg,est);
             finalizarEstatistica(est);
-            // printf("Registro %d\n"
-            //        "    Dado 1:%ld\n"
-            //        "    Dado 2:%s\n",
-            //        reg->chave, reg->dado1, reg->dado2);
+            printf("Registro %d\n"
+                   "    Dado 1:%ld\n"
+                   "    Dado 2:%s\n",
+                   reg->chave, reg->dado1, reg->dado2);
             break;
         case 2:
+            // Arvore Binaria
             zerarEstatistica(est);
             criarArvoreBinaria(arquivo,quantidade);
             finalizarEstatistica(est);
+            printf("Estatisticas\n"
+           "    Numero de transferencias: %d\n"
+           "    Numero de comparacoes: %d\n"
+           "    Tempo: %lfs\n",
+           est->transferencias, est->comparacoes,
+           calcularTempo(est));
             preproc = calcularTempo(est);
 
             zerarEstatistica(est);
@@ -94,12 +101,12 @@ int main(int argc, char *argv[]) {
     }
     fclose(arquivo);
 
-    // printf("Estatisticas\n"
-    //       "    Numero de transferencias: %d\n"
-    //       "    Numero de comparacoes: %d\n"
-    //       "    Tempo: %lfs\n",
-    //       est->transferencias, est->comparacoes,
-    //       calcularTempo(est));
+    printf("Estatisticas\n"
+           "    Numero de transferencias: %d\n"
+           "    Numero de comparacoes: %d\n"
+           "    Tempo: %lfs\n",
+           est->transferencias, est->comparacoes,
+           calcularTempo(est));
           
     
     fprintf(resultados, "%d,%d,%d,%d,%d,%d,%lf,%lf\n",

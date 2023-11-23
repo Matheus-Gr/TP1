@@ -85,6 +85,12 @@ void arvBE_main(int chave, FILE *arq, int qtd_limite, Estatistica *est, double* 
   
     finalizarEstatistica(est);
     *tempocriacao = calcularTempo(est);
+    printf("Estatisticas\n"
+           "    Numero de transferencias: %d\n"
+           "    Numero de comparacoes: %d\n"
+           "    Tempo: %lfs\n",
+           est->transferencias, est->comparacoes,
+           calcularTempo(est));
     
     zerarEstatistica(est);
     if(pesquisaBEstrela(&item, &arvore, est, &Condicao)){

@@ -1,9 +1,5 @@
-# Makefile para compilar o programa tp1.exe
-
-# Compilador
 CC = gcc
 
-# Opções de compilação
 CFLAGS = -Wall -std=c99
 
 # Arquivos fonte

@@ -25,6 +25,7 @@ void arvoreB(FILE *arq, int chave, Estatistica *est)
     TipoApontador Ap;
     Registro item;
     
+    zerarEstatistica(est);
     Ap= (TipoApontador)malloc(sizeof(TipoPagina));
     inicializaArvoreB(&Ap);
     while (fread(&item, sizeof(Registro), 1, arq) == 1)
@@ -33,7 +34,15 @@ void arvoreB(FILE *arq, int chave, Estatistica *est)
         insereArvoreB(item, &Ap, est);
     }
     item.chave=chave;
+    finalizarEstatistica(est);
+    printf("Estatisticas\n"
+           "    Numero de transferencias: %d\n"
+           "    Numero de comparacoes: %d\n"
+           "    Tempo: %lfs\n",
+           est->transferencias, est->comparacoes,
+           calcularTempo(est));
 
+    zerarEstatistica(est);
     pesquisaArvoreB(&item ,Ap, est);
 }
 
